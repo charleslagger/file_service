@@ -1,19 +1,13 @@
 package com.vega.samo.db.entities;
 
-import java.io.Serializable;
-
 import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * @author khoenv
  *
  */
-@SuppressWarnings("serial")
-@Document(collection = "FintechFiles")
-public class FintechFile implements Serializable {
+
+public class FintechFile {
 
 	private ObjectId id;
 	private String fileName;
@@ -23,8 +17,6 @@ public class FintechFile implements Serializable {
 	private Long orderId;
 	private String partnerId;
 	
-	@Id
-	@Field("_id")
 	public ObjectId getId() {
 		return id;
 	}
@@ -33,7 +25,6 @@ public class FintechFile implements Serializable {
 		this.id = id;
 	}
 
-	@Field("FileName")
 	public String getFileName() {
 		return fileName;
 	}
@@ -42,7 +33,6 @@ public class FintechFile implements Serializable {
 		this.fileName = fileName;
 	}
 
-	@Field("Path")
 	public String getPath() {
 		return path;
 	}
@@ -51,7 +41,6 @@ public class FintechFile implements Serializable {
 		this.path = path;
 	}
 
-	@Field("DateCreated")
 	public String getDateCreated() {
 		return dateCreated;
 	}
@@ -60,7 +49,6 @@ public class FintechFile implements Serializable {
 		this.dateCreated = dateCreated;
 	}
 
-	@Field("Content")
 	public String getContent() {
 		return content;
 	}
@@ -69,7 +57,6 @@ public class FintechFile implements Serializable {
 		this.content = content;
 	}
 
-	@Field("OrderId")
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -78,7 +65,6 @@ public class FintechFile implements Serializable {
 		this.orderId = orderId;
 	}
 
-	@Field("PartnerId")
 	public String getPartnerId() {
 		return partnerId;
 	}
