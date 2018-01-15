@@ -1,5 +1,6 @@
 package service;
 
+import db.entities.FileCore;
 import db.entities.UrlParam;
 import db.repo.FileRepo;
 import db.repo.PartnerRepo;
@@ -7,6 +8,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import exception.CoreException;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UrlParamService {
@@ -35,5 +37,40 @@ public class UrlParamService {
         docTypes = docTypes[docTypes.length - index].split("&");
 
         return docTypes[0];
+    }
+
+//    public String getFileContent(String fileId, String partnerId) throws CoreException{
+//        if(StringUtils.isEmpty(fileId)){
+//            throw new CoreException("INVALID_REQUEST_INPUT", "FileId invalid");
+//        }
+//
+//        if(StringUtils.isEmpty(partnerId)){
+//            throw new CoreException("INVALID_REQUEST_INPUT", "PartnerId invalid");
+//        }
+//
+//        FileCore fileCore = fileRepo.getPathByFileIdAndPartnerId(fileId, partnerId);
+//        if(fileCore == null){
+//            throw new CoreException("INVALID_REQUEST_STORAGE","FileCore doesn't exist");
+//        }
+//
+//        return fileCore.getPath();
+//    }
+
+
+    public String getFileContent(long fileId, String partnerId) throws CoreException{
+        if(fileId < 1L){
+            throw new CoreException("INVALID_REQUEST_INPUT", "FileId invalid");
+        }
+
+        if(StringUtils.isEmpty(partnerId)){
+            throw new CoreException("INVALID_REQUEST_INPUT", "PartnerId invalid");
+        }
+
+        FileCore fileCore = fileRepo.getPathByFileIdAndPartnerId(fileId, partnerId);
+        if(fileCore == null){
+            throw new CoreException("INVALID_REQUEST_STORAGE","FileCore doesn't exist");
+        }
+
+        return fileCore.getPath();
     }
 }
