@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class FileRepo {
-    private static final String COLLECTION_NAME = "FintechFiles";
+    private static final String COLLECTION_NAME = "Files";
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -21,19 +21,11 @@ public class FileRepo {
         mongoTemplate.save(fileCore, COLLECTION_NAME);
     }
 
-//    public FileCore getPathByFileIdAndPartnerId(String fileId, String partnerId) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("_id").is(fileId).and("PartnerId").is(partnerId));
-//
-//        List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "FintechFiles");
-//        return CollectionUtils.isEmpty(fileCores) ? null : fileCores.get(0);
-//    }
-
     public FileCore getPathByFileIdAndPartnerId(long fileId, String partnerId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("_id").is(fileId).and("PartnerId").is(partnerId));
 
-        List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "FintechFiles");
+        List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "Files");
         return CollectionUtils.isEmpty(fileCores) ? null : fileCores.get(0);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
 *
-* db.partner_seq.insert({_id: "Partners",seq: 0})
+* db.partner_seq.insert({_id: "Partnerss",seq: 0})
 * */
 
 @Document(collection = "partner_seq")

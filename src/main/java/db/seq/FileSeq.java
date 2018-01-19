@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
-* db.file_seq.insert({_id: "FintechFiles",seq: 0})
+* db.file_seq.insert({_id: "Files",seq: 0})
 * */
 
 @Document(collection = "file_seq")
