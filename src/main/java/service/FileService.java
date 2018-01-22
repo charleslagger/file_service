@@ -1,6 +1,14 @@
 package service;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Calendar;
+import com.vega.core.CoreException;
 import db.entities.FileCore;
 import db.entities.Partner;
 import db.entities.UrlParam;
@@ -8,7 +16,6 @@ import db.repo.FileRepo;
 import db.repo.PartnerRepo;
 import db.repo.seq.SeqFileRepo;
 import db.repo.seq.SeqPartnerRepo;
-import exception.CoreException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +32,7 @@ public class FileService {
     private static final String PARTNER_SEQ_KEY = "Partnerss";
     private Base64 base64 = new Base64();
     private final String HOST;
-    private final String DEST = System.getProperty("catalina.home") + java.io.File.separator + "file-store";
+    private final Path DEST;
     @Autowired
     private FileRepo fileRepo;
 
@@ -40,12 +47,12 @@ public class FileService {
 
     public FileService(Environment env) {
         HOST = env.getProperty("host");
-//        DEST = env.getProperty("dest");
+        DEST = Paths.get(System.getProperty(env.getProperty("storage")) + File.separator + "file");
         initDest();
     }
 
     private void initDest() {
-        File dir = new File(DEST);
+        File dir = new File(DEST.toAbsolutePath().toString());
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -64,17 +71,18 @@ public class FileService {
             throw new CoreException("INVALID_REQUEST_INPUT", "Input param invalid");
         }
 
-        long currentTimeUpload = System.currentTimeMillis();
-        String fileName = multipartFile.getOriginalFilename().split("\\.")[0] + "_" + currentTimeUpload + "." + multipartFile.getOriginalFilename().split("\\.")[1];
+        long currentTimeUpload = Calendar.getInstance().getTimeInMillis();
+
+        String fileFullName = fileName(multipartFile) + "_" + currentTimeUpload + "." + fileTypeName(multipartFile);
 
         FileCore file = new FileCore();
         file.setId(seqFileRepo.getNextSequenceId(FILE_SEQ_KEY));
-        file.setFileName(fileName);
+        file.setFileName(fileFullName);
         file.setContent(urlParam.getDocTypeName());
         file.setDateCreated(String.valueOf(currentTimeUpload));
         file.setOrderId(urlParam.getOrderId());
         file.setPartnerId(urlParam.getPartnerId());
-        file.setPath(DEST + File.separator + fileName);
+        file.setPath(DEST.toString() + File.separator + fileFullName);
 
         Partner partner = new Partner();
         partner.setId(seqPartnerRepo.getNextSequenceId(PARTNER_SEQ_KEY));
@@ -86,14 +94,44 @@ public class FileService {
 
         fileRepo.saveFile(file);
         partnerRepo.savePartner(partner);
+
+        storageFile(multipartFile, fileFullName);
+    }
+
+    private void storageFile(MultipartFile multipartFile, String fileName) {
+        File file = new File(DEST.toString() + File.separator + fileName);
+        BufferedOutputStream stream = null;
+
+        try {
+            stream = new BufferedOutputStream(new FileOutputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        byte[] bytes = new byte[0];
+        try {
+            bytes = multipartFile.getBytes();
+            stream.write(bytes);
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void preventFileDamage(MultipartFile multipartFile) throws CoreException {
 
-        String fileType = multipartFile.getOriginalFilename().split("\\.")[multipartFile.getOriginalFilename().split("\\.").length - 1];
+        String fileType = fileTypeName(multipartFile);
 
         if(fileType.equals("exe") || fileType.equals("php") || fileType.equals("sh")|| fileType.equals("com")){
             throw new CoreException("INVALID_REQUEST_INPUT", "File's format prevented");
         }
+    }
+
+    private String fileName(MultipartFile multipartFile) {
+        return multipartFile.getOriginalFilename().substring(0, multipartFile.getOriginalFilename().indexOf(fileTypeName(multipartFile)) - 1);
+    }
+
+    private String fileTypeName(MultipartFile multipartFile) {
+        return multipartFile.getOriginalFilename().split("\\.")[multipartFile.getOriginalFilename().split("\\.").length - 1];
     }
 }

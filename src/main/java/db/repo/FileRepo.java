@@ -21,9 +21,9 @@ public class FileRepo {
         mongoTemplate.save(fileCore, COLLECTION_NAME);
     }
 
-    public FileCore getPathByFileIdAndPartnerId(long fileId, String partnerId) {
+    public FileCore getPathByFileIdAndPartnerId(String originalFileId, String partnerId) {
         Query query = new Query();
-        query.addCriteria(Criteria.where("_id").is(fileId).and("PartnerId").is(partnerId));
+        query.addCriteria(Criteria.where("FileName").is(originalFileId).and("PartnerId").is(partnerId));
 
         List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "Files");
         return CollectionUtils.isEmpty(fileCores) ? null : fileCores.get(0);

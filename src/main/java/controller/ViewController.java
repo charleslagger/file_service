@@ -1,25 +1,27 @@
 package controller;
 
-import exception.CoreException;
+import javax.servlet.http.HttpServletResponse;
+import com.vega.core.CoreException;
+import com.vega.core.CoreResponse;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import service.UrlParamService;
-import util.CoreResponse;
 
 @RestController
 public class ViewController {
     private Logger log = Logger.getLogger(getClass());
     @Autowired
     private UrlParamService urlParamService;
-    @GetMapping("/file/get_file_url")
-    public CoreResponse getFileContent(@RequestParam("file_id") long fileId,
-                                       @RequestParam("partner_id") String partnerId){
+    @GetMapping("/private/file/get_file")
+    public CoreResponse getFileContent(@RequestParam String originalFileId,
+                                       @RequestParam String partnerId,
+                                       HttpServletResponse response){
         try {
-
-            return new CoreResponse(true , urlParamService.getFileContent(fileId, partnerId));
+            urlParamService.getFileContent(originalFileId, partnerId, response);
+            return new CoreResponse(true , "View file successfull");
         } catch (CoreException e) {
 
             log.info(" core exc controller");
