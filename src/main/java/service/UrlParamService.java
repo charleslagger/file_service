@@ -1,23 +1,23 @@
 package service;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import com.vega.core.CoreException;
-import db.entities.FileCore;
-import db.entities.UrlParam;
-import db.repo.FileRepo;
-import db.repo.PartnerRepo;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
+import com.vega.core.CoreException;
+import db.entities.FileCore;
+import db.entities.UrlParam;
+import db.repo.FileRepo;
+import db.repo.PartnerRepo;
 
 @Service
 public class UrlParamService {

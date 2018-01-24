@@ -73,4 +73,25 @@ public class UrlParam {
     public void setMultipartFile(MultipartFile multipartFile) {
         this.multipartFile = multipartFile;
     }
+
+    public static class ResponseCore{
+        private Long optType;
+        private List<UrlParam> urlParams;
+
+        public Long getOptType() {
+            return optType;
+        }
+
+        public void setOptType(Long optType) {
+            this.optType = optType;
+        }
+
+        public List<UrlParam> getUrlParams() {
+            return urlParams;
+        }
+
+        public void setUrlParams(List<UrlParam> urlParams) {
+            this.urlParams = urlParams;
+        }
+    }
 }
