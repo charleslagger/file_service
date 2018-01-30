@@ -28,5 +28,13 @@ public class FileRepo {
         List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "Files");
         return CollectionUtils.isEmpty(fileCores) ? null : fileCores.get(0);
     }
+    
+    public FileCore getPathByFileId(String originalFileId) {
+    	Query query = new Query();
+    	query.addCriteria(Criteria.where("FileName").is(originalFileId));
+    	
+    	List<FileCore> fileCores = mongoTemplate.find(query, FileCore.class, "Files");
+    	return CollectionUtils.isEmpty(fileCores) ? null : fileCores.get(0);
+    }
 
 }

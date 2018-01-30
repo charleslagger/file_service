@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +24,13 @@ import com.vega.core.CoreException;
 
 import db.entities.FileCore;
 import db.entities.FileCore.AckUpload;
+import db.entities.FileCore.AckUpload.AcknowledgeUploaded;
+import db.entities.FileCore.AckUpload.AcknowledgeUploaded.ProductContractPattern;
+import db.entities.FileCore.LoanDocument;
+import db.entities.FileCore.LoanDocuments;
 import db.entities.Partner;
 import db.entities.UrlParam;
+import db.entities.UrlParam.UrlParams;
 import db.repo.FileRepo;
 import db.repo.PartnerRepo;
 import db.repo.seq.SeqFileRepo;
@@ -66,51 +74,109 @@ public class FileService {
 		}
 	}
 
-	public void saveFile(UrlParam urlParam) throws CoreException {
-		MultipartFile multipartFile = urlParam.getMultipartFile();
-		if (multipartFile == null) {
-			throw new CoreException("INVALID_REQUEST_INPUT", "File input invalid");
+	public String saveFile(UrlParams responseCore) throws CoreException {
+
+		List<FileCore> fileCores = new LinkedList<>();
+		List<Partner> partners = new LinkedList<>();
+
+		for (UrlParam urlParam : responseCore.getUrlParams()) {
+			MultipartFile multipartFile = urlParam.getMultipartFile();
+			if (multipartFile == null) {
+				throw new CoreException("INVALID_REQUEST_INPUT", "File input invalid");
+			}
+			preventFileDamage(multipartFile);
+
+			if (StringUtils.isEmpty(urlParam.getDocTypeName()) || StringUtils.isEmpty(urlParam.getPartnerId())
+					|| urlParam.getOrderId() == null || urlParam.getOrderId() < 0
+					|| StringUtils.isEmpty(urlParam.getAckUrl())
+					|| (!urlParam.getAckUrl().equals(Constant.ACK_CONTRACTS)
+							&& !urlParam.getAckUrl().equals(Constant.ACK_DISBURSEMENT)
+							&& !urlParam.getAckUrl().equals(Constant.ACK_LOAN_DOCUMENTS))
+					|| StringUtils.isEmpty(urlParam.getmKey()) || urlParam.getOpt() == null || urlParam.getOpt() < 0) {
+				throw new CoreException("INVALID_REQUEST_INPUT", "Input param invalid");
+			}
+
+			long currentTimeUpload = Calendar.getInstance().getTimeInMillis();
+
+			String fileFullName = fileName(multipartFile) + "_" + currentTimeUpload + "." + fileTypeName(multipartFile);
+
+			FileCore file = new FileCore();
+			file.setId(seqFileRepo.getNextSequenceId(FILE_SEQ_KEY));
+			file.setFileName(fileFullName);
+			file.setContent(urlParam.getDocTypeName());
+			file.setDateCreated(String.valueOf(currentTimeUpload));
+			file.setOrderId(urlParam.getOrderId());
+			file.setPartnerId(urlParam.getPartnerId());
+			file.setPath(DEST.toString() + File.separator + fileFullName);
+
+			Partner partner = new Partner();
+			partner.setId(seqPartnerRepo.getNextSequenceId(PARTNER_SEQ_KEY));
+			partner.setName(new String(base64.encode(urlParam.getPartnerId().getBytes())));
+			partner.setAuthenKey(urlParam.getmKey());
+			partner.setStatus(PartnerStatus.PARTNER_ACTIVE);
+
+			partner.setIp((HOST.split(":"))[1].substring(2));
+
+			fileRepo.saveFile(file);
+			partnerRepo.savePartner(partner);
+
+			storageFile(multipartFile, fileFullName);
+
+			fileCores.add(file);
+			partners.add(partner);
 		}
-		preventFileDamage(multipartFile);
 
-		if (StringUtils.isEmpty(urlParam.getDocTypeName()) || StringUtils.isEmpty(urlParam.getPartnerId())
-				|| urlParam.getOrderId() == null || urlParam.getOrderId() < 0
-				|| StringUtils.isEmpty(urlParam.getAckUrl()) 
-				|| (!urlParam.getAckUrl().equals(Constant.ACK_CONTRACTS) && !urlParam.getAckUrl().equals(Constant.ACK_DISBURSEMENT)
-				&& !urlParam.getAckUrl().equals(Constant.ACK_LOAN_DOCUMENTS))
-				|| StringUtils.isEmpty(urlParam.getmKey())
-				|| urlParam.getOpt() == null || urlParam.getOpt() < 0) {
-			throw new CoreException("INVALID_REQUEST_INPUT", "Input param invalid");
-		}
+		// Write test case
+		return sendInfoToCore(responseCore.getUrlParams(), fileCores, partners);
+	}
+	
+	public String saveFile(UrlParam urlParam) throws CoreException {
 
-		long currentTimeUpload = Calendar.getInstance().getTimeInMillis();
+			MultipartFile multipartFile = urlParam.getMultipartFile();
+			if (multipartFile == null) {
+				throw new CoreException("INVALID_REQUEST_INPUT", "File input invalid");
+			}
+			preventFileDamage(multipartFile);
 
-		String fileFullName = fileName(multipartFile) + "_" + currentTimeUpload + "." + fileTypeName(multipartFile);
+			if (StringUtils.isEmpty(urlParam.getDocTypeName()) || StringUtils.isEmpty(urlParam.getPartnerId())
+					|| urlParam.getOrderId() == null || urlParam.getOrderId() < 0
+					|| StringUtils.isEmpty(urlParam.getAckUrl())
+					|| (!urlParam.getAckUrl().equals(Constant.ACK_CONTRACTS)
+							&& !urlParam.getAckUrl().equals(Constant.ACK_DISBURSEMENT)
+							&& !urlParam.getAckUrl().equals(Constant.ACK_LOAN_DOCUMENTS))
+					|| StringUtils.isEmpty(urlParam.getmKey()) || urlParam.getOpt() == null || urlParam.getOpt() < 0) {
+				throw new CoreException("INVALID_REQUEST_INPUT", "Input param invalid");
+			}
 
-		FileCore file = new FileCore();
-		file.setId(seqFileRepo.getNextSequenceId(FILE_SEQ_KEY));
-		file.setFileName(fileFullName);
-		file.setContent(urlParam.getDocTypeName());
-		file.setDateCreated(String.valueOf(currentTimeUpload));
-		file.setOrderId(urlParam.getOrderId());
-		file.setPartnerId(urlParam.getPartnerId());
-		file.setPath(DEST.toString() + File.separator + fileFullName);
+			long currentTimeUpload = Calendar.getInstance().getTimeInMillis();
 
-		Partner partner = new Partner();
-		partner.setId(seqPartnerRepo.getNextSequenceId(PARTNER_SEQ_KEY));
-		partner.setName(new String(base64.encode(urlParam.getPartnerId().getBytes())));
-		partner.setAuthenKey(urlParam.getmKey());
-		partner.setStatus(PartnerStatus.PARTNER_ACTIVE);
+			String fileFullName = fileName(multipartFile) + "_" + currentTimeUpload + "." + fileTypeName(multipartFile);
 
-		partner.setIp((HOST.split(":"))[1].substring(2));
+			FileCore file = new FileCore();
+			file.setId(seqFileRepo.getNextSequenceId(FILE_SEQ_KEY));
+			file.setFileName(fileFullName);
+			file.setContent(urlParam.getDocTypeName());
+			file.setDateCreated(String.valueOf(currentTimeUpload));
+			file.setOrderId(urlParam.getOrderId());
+			file.setPartnerId(urlParam.getPartnerId());
+			file.setPath(DEST.toString() + File.separator + fileFullName);
 
-		fileRepo.saveFile(file);
-		partnerRepo.savePartner(partner);
+			Partner partner = new Partner();
+			partner.setId(seqPartnerRepo.getNextSequenceId(PARTNER_SEQ_KEY));
+			partner.setName(new String(base64.encode(urlParam.getPartnerId().getBytes())));
+			partner.setAuthenKey(urlParam.getmKey());
+			partner.setStatus(PartnerStatus.PARTNER_ACTIVE);
 
-		storageFile(multipartFile, fileFullName);
+			partner.setIp((HOST.split(":"))[1].substring(2));
 
-		// TODO:send noti
-		sendInfoToCore(urlParam, file, partner);
+			fileRepo.saveFile(file);
+			partnerRepo.savePartner(partner);
+
+			storageFile(multipartFile, fileFullName);
+			
+//			notificationService.generateFileToCore("/private/product_contract_pattern/getFile", multipartFile);
+			
+			return "Upload Success";
 	}
 
 	private void storageFile(MultipartFile multipartFile, String fileName) {
@@ -178,18 +244,92 @@ public class FileService {
 		notificationService.sendAcknowledgeUploadContract(ackUpload);
 	}
 
-	public void sentNotificationDisbusement(String ackUrl, Long orderId, String disbursementDocumentId) throws CoreException{
-		if(StringUtils.isEmpty(ackUrl) || (orderId != null && orderId < 1) || StringUtils.isEmpty(disbursementDocumentId)) {
+	public void sentNotificationDisbusement(String ackUrl, Long orderId, String disbursementDocumentId)
+			throws CoreException {
+		if (StringUtils.isEmpty(ackUrl) || (orderId != null && orderId < 1)
+				|| StringUtils.isEmpty(disbursementDocumentId)) {
 			throw new CoreException("INVALID_REQUEST_INPUT", "Input request invalid");
 		}
-		
-		notificationService.sendDisbursement(ackUrl, "orderId", orderId, "disbursementDocumentId", disbursementDocumentId);
+
+		notificationService.sendDisbursement(ackUrl, "orderId", orderId, "disbursementDocumentId",
+				disbursementDocumentId);
 
 	}
 
-	private void sendInfoToCore(UrlParam urlParam, FileCore file, Partner partner) {
-		if() {
-			throw new CoreException("INVALID_REQUEST_INPUT", "Url param invalid");
+	private String sendInfoToCore(List<UrlParam> urlParams, List<FileCore> files, List<Partner> partners) {
+		LoanDocuments loanDocuments = new LoanDocuments();
+		AckUpload ackUpload = new AckUpload();
+
+		List<LoanDocument> lds = new LinkedList<>();
+		List<ProductContractPattern> productContractPatterns = new LinkedList<>();
+		AcknowledgeUploaded acknowledgeUploaded = new AcknowledgeUploaded();
+
+		int i = 0;
+		for (UrlParam urlParam : urlParams) {
+			switch (urlParam.getAckUrl()) {
+			case Constant.ACK_LOAN_DOCUMENTS:
+
+				if (StringUtils.isEmpty(loanDocuments.getAckUrl())) {
+					loanDocuments.setAckUrl(urlParam.getAckUrl());
+				}
+
+				LoanDocument loanDocument = new LoanDocument();
+				loanDocument.setDocumentTypeName(urlParam.getDocTypeName());
+				loanDocument.setOriginalFileId(files.get(i).getFileName());
+				loanDocument.setOrderId(urlParam.getOrderId());
+
+				lds.add(loanDocument);
+				break;
+
+			case Constant.ACK_CONTRACTS:
+
+				if (StringUtils.isEmpty(ackUpload.getAckUrl())) {
+					ackUpload.setAckUrl(urlParam.getAckUrl());
+				}
+
+				if (StringUtils.isEmpty(acknowledgeUploaded.getContractDocumentId())
+						&& (acknowledgeUploaded.getOrderId() == null || acknowledgeUploaded.getOrderId() < 1)
+						&& (acknowledgeUploaded.getType() == null || acknowledgeUploaded.getType() != 2)) {
+					acknowledgeUploaded.setOrderId(urlParam.getOrderId());
+					acknowledgeUploaded.setContractDocumentId(files.get(i).getFileName());
+					acknowledgeUploaded.setType(urlParam.getOpt());
+				}
+
+				ProductContractPattern productContractPattern = new ProductContractPattern();
+				productContractPattern.setOriginalFileID(files.get(i).getFileName());
+				productContractPattern.setPatternName(urlParam.getDocTypeName());
+				productContractPattern.setProductId(urlParam.getOrderId());
+
+				productContractPatterns.add(productContractPattern);
+
+				break;
+
+			case Constant.ACK_DISBURSEMENT:
+
+				notificationService.sendDisbursement(urlParam.getAckUrl(), "orderId", urlParam.getOrderId(),
+						"disbursementDocumentId", files.get(i).getFileName());
+
+				return "Upload disbursement successfully";
+
+			default:
+				break;
+			}
+
+			i++;
 		}
+
+		loanDocuments.setLoanDocuments(lds);
+		log.info("==>>LoanDocuments ack: " + loanDocuments.getAckUrl());
+		if (!StringUtils.isEmpty(loanDocuments.getAckUrl())) {
+			notificationService.sendLoanDocuments(loanDocuments);
+
+			return "Upload LoanDocuments successfully";
+		}
+
+		acknowledgeUploaded.setProductContractPatterns(productContractPatterns);
+		ackUpload.setAcknowledgeUploaded(acknowledgeUploaded);
+		log.info("==>>AckUpload ack: " + ackUpload.getAckUrl());
+
+		return "Upload Contracts successfully";
 	}
 }

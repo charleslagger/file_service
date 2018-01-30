@@ -4,6 +4,7 @@
 target/
 .tern-project
 WebContent/
+src/test/
 bin/
 *.iml
 *.log

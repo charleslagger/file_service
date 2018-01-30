@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vega.core.CoreResponse;
@@ -132,5 +133,10 @@ public class NotificationService {
 				new HttpEntity<Object>(headers), parameterizedTypeReference);
 
 		log.info("Response body: " + response.getBody().getMessageCode());
+	}
+
+	public void generateFileToCore(MultipartFile multipartFile) {
+		
+		
 	}
 }

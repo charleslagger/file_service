@@ -1,13 +1,10 @@
-package db.entities;
+package util;
 
-import java.util.List;
+import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.FileSystemResource;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class UrlParam {
+public class FileSystem implements Serializable{
 	private String docTypeName;// fName
 	private String partnerId;
 	private Long orderId;
@@ -16,14 +13,16 @@ public class UrlParam {
 	private Short opt;// field to determine request from core is loan request(0) or contract(2) or
 	// disbursement(1)
 
-	private MultipartFile multipartFile;
+	private FileSystemResource multipartFile;
+	
+	
 
-	public UrlParam() {
-		super();
+	public FileSystem() {
+	
 	}
 
-	public UrlParam(String docTypeName, String partnerId, Long orderId, String ackUrl, String mKey, Short opt,
-			MultipartFile multipartFile) {
+	public FileSystem(String docTypeName, String partnerId, Long orderId, String ackUrl, String mKey, Short opt,
+			FileSystemResource multipartFile) {
 		super();
 		this.docTypeName = docTypeName;
 		this.partnerId = partnerId;
@@ -32,7 +31,6 @@ public class UrlParam {
 		this.mKey = mKey;
 		this.opt = opt;
 		this.multipartFile = multipartFile;
-
 	}
 
 	public String getDocTypeName() {
@@ -83,43 +81,14 @@ public class UrlParam {
 		this.opt = opt;
 	}
 
-	// @JsonBackReference
-	public MultipartFile getMultipartFile() {
+	public FileSystemResource getMultipartFile() {
 		return multipartFile;
 	}
 
-	public void setMultipartFile(MultipartFile multipartFile) {
+	public void setMultipartFile(FileSystemResource multipartFile) {
 		this.multipartFile = multipartFile;
 	}
+	
+	
 
-	public static class UrlParams {
-
-		public UrlParams() {
-
-		}
-
-		public UrlParams(List<UrlParam> urlParams) {
-			super();
-			this.urlParams = urlParams;
-		}
-
-		// private Long optType;
-		private List<UrlParam> urlParams;
-
-		// public Long getOptType() {
-		// return optType;
-		// }
-		//
-		// public void setOptType(Long optType) {
-		// this.optType = optType;
-		// }
-
-		public List<UrlParam> getUrlParams() {
-			return urlParams;
-		}
-
-		public void setUrlParams(List<UrlParam> urlParams) {
-			this.urlParams = urlParams;
-		}
-	}
 }
