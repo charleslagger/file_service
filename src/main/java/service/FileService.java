@@ -10,17 +10,15 @@ import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.vega.core.CoreException;
+import com.vega.core.CoreResponse;
 
 import db.entities.FileCore;
 import db.entities.FileCore.AckUpload;
@@ -42,7 +40,7 @@ import util.Constant;
 public class FileService {
 	private Logger log = Logger.getLogger(getClass());
 	private static final String FILE_SEQ_KEY = "Files";
-	private static final String PARTNER_SEQ_KEY = "Partnerss";
+	private static final String PARTNER_SEQ_KEY = "Partners";
 	private Base64 base64 = new Base64();
 	private final String HOST;
 	private final Path DEST;
@@ -74,7 +72,7 @@ public class FileService {
 		}
 	}
 
-	public String saveFile(UrlParams responseCore) throws CoreException {
+	public CoreResponse saveFile(UrlParams responseCore) throws CoreException {
 
 		List<FileCore> fileCores = new LinkedList<>();
 		List<Partner> partners = new LinkedList<>();
@@ -130,7 +128,7 @@ public class FileService {
 		return sendInfoToCore(responseCore.getUrlParams(), fileCores, partners);
 	}
 	
-	public String saveFile(UrlParam urlParam) throws CoreException {
+	public CoreResponse saveFile(UrlParam urlParam) throws CoreException {
 
 			MultipartFile multipartFile = urlParam.getMultipartFile();
 			if (multipartFile == null) {
@@ -173,10 +171,8 @@ public class FileService {
 			partnerRepo.savePartner(partner);
 
 			storageFile(multipartFile, fileFullName);
-			
-//			notificationService.generateFileToCore("/private/product_contract_pattern/getFile", multipartFile);
-			
-			return "Upload Success";
+
+			return sendInfoToCore(urlParam, file, partner);
 	}
 
 	private void storageFile(MultipartFile multipartFile, String fileName) {
@@ -231,7 +227,7 @@ public class FileService {
 			}
 		}
 
-		notificationService.sendLoanDocuments(loanDocuments);
+		notificationService.sendListLoanDocuments(loanDocuments);
 
 	}
 
@@ -256,7 +252,7 @@ public class FileService {
 
 	}
 
-	private String sendInfoToCore(List<UrlParam> urlParams, List<FileCore> files, List<Partner> partners) {
+	private CoreResponse sendInfoToCore(List<UrlParam> urlParams, List<FileCore> files, List<Partner> partners) {
 		LoanDocuments loanDocuments = new LoanDocuments();
 		AckUpload ackUpload = new AckUpload();
 
@@ -306,10 +302,8 @@ public class FileService {
 
 			case Constant.ACK_DISBURSEMENT:
 
-				notificationService.sendDisbursement(urlParam.getAckUrl(), "orderId", urlParam.getOrderId(),
+				return notificationService.sendDisbursement(urlParam.getAckUrl(), "orderId", urlParam.getOrderId(),
 						"disbursementDocumentId", files.get(i).getFileName());
-
-				return "Upload disbursement successfully";
 
 			default:
 				break;
@@ -321,15 +315,44 @@ public class FileService {
 		loanDocuments.setLoanDocuments(lds);
 		log.info("==>>LoanDocuments ack: " + loanDocuments.getAckUrl());
 		if (!StringUtils.isEmpty(loanDocuments.getAckUrl())) {
-			notificationService.sendLoanDocuments(loanDocuments);
+			return notificationService.sendListLoanDocuments(loanDocuments);
 
-			return "Upload LoanDocuments successfully";
 		}
 
 		acknowledgeUploaded.setProductContractPatterns(productContractPatterns);
 		ackUpload.setAcknowledgeUploaded(acknowledgeUploaded);
 		log.info("==>>AckUpload ack: " + ackUpload.getAckUrl());
 
-		return "Upload Contracts successfully";
+		return notificationService.sendAcknowledgeUploadContract(ackUpload);
+	}
+
+	private CoreResponse sendInfoToCore(UrlParam urlParam, FileCore file, Partner partner) {
+		LoanDocument loanDocument = new LoanDocument();
+		AcknowledgeUploaded acknowledgeUploaded = new AcknowledgeUploaded();
+
+		switch (urlParam.getAckUrl()){
+			case Constant.ACK_LOAN_DOCUMENTS:
+				loanDocument = new LoanDocument();
+				loanDocument.setDocumentTypeName(urlParam.getDocTypeName());
+				loanDocument.setOriginalFileId(file.getFileName());
+				loanDocument.setOrderId(urlParam.getOrderId());
+
+				return notificationService.sendLoanDocument(urlParam.getAckUrl(), loanDocument);
+
+			case Constant.ACK_CONTRACTS:
+				acknowledgeUploaded.setOrderId(urlParam.getOrderId());
+				acknowledgeUploaded.setContractDocumentId(file.getFileName());
+				acknowledgeUploaded.setType(urlParam.getOpt());
+
+				return notificationService.sendContract(urlParam.getAckUrl(), acknowledgeUploaded);
+
+			case Constant.ACK_DISBURSEMENT:
+				
+				return notificationService.sendDisbursement(urlParam.getAckUrl(), "orderId", urlParam.getOrderId(),
+						"disbursementDocumentId", file.getFileName());
+
+			default:
+				return new CoreResponse(true, "ACK Url invalid");
+		}
 	}
 }

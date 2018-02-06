@@ -1,0 +1,390 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        html * {
+            font-family: 'Times New Roman' !important;
+            font-size: 12px !important;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="text-align: center">
+            <h2>HỢP ĐỒNG VAY CẦM CỐ</h2>
+            <span>Số: [[ContractCode]] Ngày:[[startTime]]</span>
+        </div>
+        <fieldset style="padding: 5px 0 0; margin-top: 5px; line-height: 16px; width: 100%; margin-bottom: 0; padding-bottom: 0">
+            <ul style="margin: 0; padding: 0; width: 100%; list-style-type: none">
+                <li>Bên Cho Vay: <strong>CÔNG TY CỔ PHẦN VPAWN</strong></li>
+                <li>Địa chỉ: Tầng 10, toà nhà Thái Bình, Số 2A Đại Cồ Việt, Phường Phố Huế, Quận Hai Bà Trưng, TP Hà Nội</li>
+                <li>SĐT: 024.7304.2979 &nbsp;&nbsp;&nbsp;&nbsp; Email: [●]</li>
+                <li>Đại diện bởi: NGUYỄN ANH DŨNG  &nbsp;&nbsp;&nbsp;&nbsp;  Chức vụ: GIÁM ĐỐC</li>
+                <li>Sau đây gọi tắt là  (“<strong>VPAWN</strong>”)</li>
+            </ul>
+            <ul style="margin: 0; padding: 0; width: 100%; list-style-type: none">
+                <li>Bên Vay: <strong>[[customer.fullname]]</strong></li>
+                <li>Ngày sinh: <strong>[[customer.dob]]</strong>&nbsp;&nbsp;&nbsp;&nbsp;CMND số: <strong>[[customer.socialid]]</strong></li>
+                <li>Địa chỉ HKTT: <strong>[[customer.customerHistory.homeaddress]]</strong></li>
+                <li>Chỗ ở hiện tại: <strong>[[customer.customerHistory.tempaddress]]</strong></li>
+                <li>SĐT: <strong>[[customer.phoneNo]]</strong> &nbsp;&nbsp;&nbsp;&nbsp;  Email: <strong>[[customer.customerCare.toEmail]]</strong></li>
+                <li>Sau đây gọi tắt là (<strong>Khách Hàng</strong>)</li>
+            </ul>
+        </fieldset>
+        <p style="margin: 0; border: 1px solid #919191; padding: 0"></p>
+
+        <fieldset style="padding: 0; text-align: justify; line-height: 18px; margin-top: 0; margin-bottom: 0; padding-bottom: 0">
+            <p style="margin: 0; padding: 0">
+                Xét rằng, khách hàng có nhu cầu vay cầm cố từ VPAWN và đã đăng ký khoản vay cầm cố tại website: CLICKVAY.VN (“<strong>Yêu Cầu Vay</strong>”). 
+                Tại trụ sở làm việc của Vpawn, các bên đồng ý ký hợp đồng vay cầm cố (sau đây được gọi là “<strong>Hợp Đồng</strong>”)với các điều khoản và điều kiện sau:
+            </p>
+            
+            <h4 style="margin: 0; padding: 0">I.&nbsp;KHOẢN VAY:</h4>
+            <ol style="list-style-type: none; margin: 0; padding: 0; line-height: 16px">
+                <li>
+                    1. Thời hạn Khoản Vay: [[LoanTermApproveId]] tháng ([[NumberDays]] ngày - từ Ngày Bắt Đầu ([[startTime]]) đến Ngày Kết Thúc ([[FinishDate]]))
+                </li>
+                <li>
+                    2. Giá trị Khoản Vay: [[AmountApprove]] VND (bằng chữ: [[AmountText]])
+                </li>
+                <li>
+                    3. Khoản Vay Trả Góp: [[TraHangThang]] VND/tháng
+                </li>
+                <li>
+                    4. Ngày Giải Ngân: [[startTime]]
+                </li>
+                <li>
+                    5. Phương thức giải ngân: Tiền mặt
+                </li>
+                <li>
+                    6. Lãi suất vay: 1,65%/tháng (bằng chữ: một phẩy sáu lăm phần trăm một tháng)
+                </li>
+            </ol>
+            <h4 style="margin: 0; padding: 0">II.&nbsp;TÀI SẢN CẦM CỐ</h4>
+            <p style="margin: 0; padding: 0">
+                Loại Tài Sản: Điện thoại <span style="width: 150px; height: 1px"></span>Nhãn Hiệu: 
+            </p>
+            <h4 style="margin: 0; padding: 0">III.&nbsp;PHÍ DỊCH VỤ</h4>
+            <p style="margin: 0; padding: 0">
+                Phí Dịch Vụ: [[PhiDichVu]] VND/tháng (bằng chữ: [[PhiDichVuText]]./)
+            </p>
+            <h4 style="margin: 0; padding: 0">IV.&nbsp;QUY ĐỊNH CHUNG :</h4>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Bằng việc ký kết Hợp Đồng này, Khách Hàng xác nhận: 
+                Tất cả thông tin cung cấp cho VPAWN thuộc quyền quản lý, sử dụng, sở hữu của Khách Hàng; đúng sự thật; 
+                chính xác trên mọi phương diện, không có thông tin nào được che giấu hoặc làm sai lệch.
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Vì mục đích của Hợp Đồng này, “Thông Báo Đến Khách Hàng” có nghĩa là các thông báo/chấp nhận/xác nhận (tuỳ từng trường hợp) hợp lệ của VPAWN gửi cho Khách Hàng về nội dung nhất định được tham chiếu theo Hợp Đồng này, được thực hiện qua hình thức tin nhắn gửi từ tổng đài tin nhắn “[●]” (hoặc tên gọi khác theo quy định của VPAWN trong từng thời kỳ) và/hoặc gọi điện thoại trực tiếp từ Trung Tâm Dịch Vụ Khách Hàng số [●]hoặc[●] (hoặc số điện thoại khác có thể được VPAWN thay đổi từng thời kỳ và được cập nhật trên website:[●] và/hoặc website khác do VPAWN chỉ định theo từng thời kỳ) (“Trung Tâm Dịch Vụ Khách Hàng”) đến số di động của Khách Hàng như được quy định ở Hợp Đồng này  (“Điện Thoại Đăng Ký”) và/hoặc gửi thư qua điện tử (email) trực tiếp đến địa chỉ thư điện tử của Khách Hành quy định tại Hợp Đồng này (“Email Đăng Ký”) và/hoặc hình thức khác mà VPAWN cho là phù hợp. 
+                Khách Hàng theo đó xác nhận chấp thuận chịu sự ràng buộc và tuân thủ theo các Thông Báo Đến Khách Hàng trong mọi trường hợp. Thông Báo Đến Khách Hàng là phần không tách rời của Hợp Đồng này và có thể được thực hiện bởi và/hoặc thông qua các bên cung cấp dịch vụ, các đối tác do VPAWN chỉ định trong từng thời kỳ và có giá trị ràng buộc các bên. Trong trường hợp Thông Báo đến Khách Hàng vì lý do nào đó có thể có một hoặc một vài thông tin bị lỗi và/hoặc sai sót, VPAWN bảo lưu quyền đính chính, chỉnh sửa lại thông tin đó bằng việc gửi một Thông Báo Đến Khách Hàng khác trong vòng 7 ngày làm việc sau đó.
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Hợp Đồng là thỏa thuận của các bên về việc vay cầm cố tài sản theo các quy định tại điều khoản và điều kiện chung đính kèm Hợp Đồng (“Điều Khoản và Điều Kiện Chung”), Điều Khoản và Điều Kiện Chung là một phần không tách rời của Hợp Đồng. 
+                Bằng việc ký kết Hợp Đồng, các bên xác nhận đã đọc, hiểu, đồng ý và chịu sự ràng buộc bởi điều khoản điều kiện của Hợp Đồng và Điều Khoản và Điều Kiện Chung.
+            </p>
+        </fieldset>
+        <fieldset style="border: 1px solid #2d2d2d; text-align: justify; margin: 0; padding: 0">
+            <table style="width: 100%; margin: 0; padding: 0; line-height: 25px">
+                <tr style="margin: 0; padding: 0">
+                    <td valign="top" style="border-right: 1px solid #2d2d2d; width: 50%">
+                        <p style="margin: 0; padding: 0; text-align: center; padding-top: 5px">THAY MẶT VÀ ĐẠI DIỆN CHO VAY</p>
+                    </td>
+                    <td valign="top" style="width: 50%">
+                        <div style="padding: 0 10px 0 10px;">
+                            <p style="text-align: center; margin: 0; padding: 0;padding-top: 5px">KHÁCH HÀNG</p>
+                            <ul style="padding: 0; margin: 0; list-style-type: none; line-height: 23px">
+                                <li style="margin: 0; padding: 0">
+                                    Họ và Tên: <strong>[[customer.fullname]]</strong>
+                                </li>
+                                <li>
+                                    Mã OTP:       ...................................................................
+                                </li>
+                                <li>
+                                    Xác nhận vào: ...........................................................
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <div>
+        <div style="text-align: center">
+            <h2>ĐIỀU KHOẢN VÀ ĐIỀU KIỆN CHUNG</h2>
+            <h4>HỢP ĐỒNG VAY CẦM CỐ</h4>
+        </div>
+        <!--border: 1px solid #2d2d2d;-->
+        <fieldset style="text-align: justify; line-height: 16px; margin-top: 10px; padding-bottom: 0; margin-bottom: 0; word-spacing: 1px; padding-top: 0">
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                A.&nbsp;&nbsp;KHOẢN VAY
+            </p>
+            <p style="margin: 0; padding: 0">
+                Khoản Vay là tiền thuộc quyền sở hữu hợp pháp của VPAWN, được dùng để cho vay cầm cố theo quy định tại Hợp Đồng này, và được chuyển giao cho Khách Hàng vào Ngày Giải Ngân.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                B.&nbsp;&nbsp;TÀI SẢN CẦM CỐ
+            </p>
+            <p style="margin: 0; padding: 0">
+                Tài sản cầm cố là tài sản thuộc sở hữu hợp pháp của Khách Hàng,
+                được dùng để bảo đảm cho việc thực hiện kịp thời, đầy đủ các nghĩa vụ thanh toán của Khách Hàng theo quy định tại Hợp Đồng.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                C.&nbsp;&nbsp;PHÍ DỊCH VỤ
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Phí Dịch Vụ theo Hợp Đồng này là khoản phí mà Khách Hàng phải thanh toán cho VPAWN cho những dịch vụ liên quan đến các khoản vay cầm cố do VPAWN cung cấp cho Khách Hàng bao gồm nhưng không giới hạn dịch vụ thẩm định, xét duyệt,quản lý và duy trì khoản vay;
+                các dịch vụ khác liên quan Tài Sản Cầm Cố bao gồm không giới hạn dịch vụ thẩm định, định giá Tài Sản Cầm Cố, giám sát quản lý Tài Sản Cầm Cố và các khoản phí khác theo quy định của VPAWN trong từng thời kỳ (“Phí Dịch Vụ”). 
+                Phí Dịch Vụ được thu đối với mỗi khoản vay được giải ngân thành công cho Khách Hàng.
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Trong suốt thời hạn của Hợp Đồng, Phí Dịch Vụ sẽ được phát sinh theo từng lần và tính cho từng và bất kỳ các khoản vay nào đáp ứng điều kiện thu phí nêu trên. 
+                Phí Dịch Vụ được tính vào ngày đầu tiên của kỳ hạn vay. Phí Dịch Vụ sẽ được tính dựa trên số tiền vay và kỳ hạn của khoản vay. 
+                Phí Dịch vụ đối với Khoản Vay Đầu Tiên quy định tại Mục I của Hợp Đồng là khoản Phí Dịch Vụ phải dịch vụ phải thanh toán cho VPAWN khi giải ngân thành công Khoản Vay Đầu Tiên. 
+                Các Bên đồng ý rằng Phí Dịch Vụ trong các trường hợp khác theo Hợp Đồng này (bao gồm nhưng không giới hạn khi giải ngân các khoản vay tiếp theo) được quy định theo Thông Báo Đến Khách Hàng đối với khoản vay tương ứng và/hoặc trong Biểu Phí do VPAWN ban hành theo từng thời kỳ, 
+                Phí Dịch Vụ không được hoàn trả lại trong bất kỳ trường hợp nào kể cả khi khoản vay được thanh toán trước hạn.
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Phí Dịch Vụ ưu đãi: áp dụng theo chương trình khuyến mại do VPAWN thông báo theo từng thời kỳ (nếu có).
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                D.&nbsp;&nbsp;THANH TOÁN
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Khách Hàng có nghĩa vụ thanh toán Khoản Vay Trả Góp, tiền lãi vay và Phí Dịch Vụ hằng tháng cùng với các chi phí khác vào ngày cuối cùng của một kỳ thanh toán. 
+                Để làm rõ, một kỳ thanh toán là 30 ngày, trong đó, kỳ thanh toán đầu tiên được tính từ Ngày Bắt Đầu, các kỳ thanh toán tiếp theo được tính từ ngày liền sau ngày kết thúc của kỳ thanh toán liền trước đó.
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Khoản thanh toán của Khách Hàng sẽ được dùng để ưu tiên thanh toán theo thứ tự như sau hoặc theo thứ tự khác do VPAWN quyết định theo từng thời kỳ 
+                <ol style="list-style-type: none; margin: 0; padding: 0">
+                    <li>
+                        (i)&nbsp;tiền lãi vay; 
+                    </li>
+                    <li>
+                        (ii)&nbsp;Phí Dịch Vụ; 
+                    </li>
+                    <li>
+                        (iii)&nbsp;các khoản phí khác (nếu có); 
+                    </li>
+                    <li>
+                        (iv)&nbsp;Tiền vay gốc; 
+                    </li>
+                    <li>
+                        (v)&nbsp;Phạt Chậm Thanh Toán; 
+                    </li>
+                    <li>
+                        (vi)&nbsp;và các khoản khác đến hạn phải thanh toán.
+                    </li>
+                </ol>
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Tuỳ thuộc vào sự chấp thuận của VPAWN, Khách Hàng có thể được tất toán trước hạn nếu Khách Hàng thanh toán đầy đủ các khoản sau: 
+            </p>
+            <ol style="list-style-type: none; margin: 0; padding: 0">
+                <li>
+                    (i)&nbsp;toàn bộ Giá Trị Khoản Vay,  
+                </li>
+                <li>
+                    (ii)&nbsp;và tiền lãi vay và Phí Dịch Vụ phát sinh đến hết ngày cuối cùng của kỳ thanh toán thực tế,  
+                </li>
+                <li>
+                    (iii)&nbsp;và toàn bộ các khoản chi phí khác (nếu có), 
+                </li>
+                <li>
+                    (iv)&nbsp;và một khoản phạt được tính bằng 50% tổng tiền lãi vay và Phí Dịch Vụ của các tháng sau ngày tất toán thực tế và trong Thời Hạn Khoản Vay.
+                </li>
+            </ol>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                E.&nbsp;&nbsp;QUYỀN VÀ NGHĨA VỤ CỦA VPAWN
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Giải ngân theo đúng quy định của Hợp Đồng;
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Yêu cầu Khách Hàng thanh toán đầy đủ các khoản đến hạn phải thanh toán theo Hợp Đồng này và/hoặc bổ sung,
+                 thay thế bất kỳ tài sản khác để bảo đảm nghĩa vụ thanh toán theo Hợp Đồng này vào bất kỳ thời điểm nào mà VPAWN cho là cần thiết;
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Yêu cầu Khách Hàng cung cấp và/hoặc bổ sung và/hoặc xuất trình bằng chứng về quyền sở hữu của Khách Hàng và/hoặc nguồn gốc đối với Tài Sản Cầm Cố theo quy định của quy định của pháp luật, 
+                cơ quan nhà nước có thẩm quyền hoặc vào bất kỳ thời điểm nào mà VPAWN cho là phù hợp;
+            </p>
+            <p style="margin: 0; padding: 0">
+                4.&nbsp;&nbsp;Yêu cầu Khách Hàng bồi thường bất kỳ thiệt hại, trách nhiệm, kiện đòi, mất mát, hư tổn, chi phí có liên quan tới hoặc phát sinh từ các giao dịch giữa hai bên theo Hợp Đồng này, 
+                bao gồm nhưng không giới hạn tới Khoản Vay, Tài Sản Cầm Cố, việc cầm cố Tài Sản Cầm Cố;
+            </p>
+            <p style="margin: 0; padding: 0">
+                5.&nbsp;&nbsp;Tuân thủ theo điều khoản và điều kiện của Hợp Đồng này.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                F.&nbsp;&nbsp;QUYỀN VÀ NGHĨA VỤ CỦA KHÁCH HÀNG
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Được yêu cầu vay các Khoản Vay Tiếp Theo theo quy định tại Hợp Đồng.
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Thanh toán đầy đủ nghĩa vụ của Khách Hàng khi đến hạn theo quy định của Hợp Đồng này.
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Cung cấp và/hoặc xuất trình bản gốc chứng từ chứng minh quyền sở hữu/nguồn gốc Tài Sản khi VPAWN và /hoặc cơ quan có thẩm quyền yêu cầu.
+            </p>
+            <p style="margin: 0; padding: 0">
+                4.&nbsp;&nbsp;Thông báo cho VPAWN  về quyền của người thứ ba đối với Tài Sản, nếu có.
+            </p>
+            <p style="margin: 0; padding: 0">
+                5.&nbsp;&nbsp;Khách hàng cam kết không huỷ ngang đồng ý với bất kỳ thay đổi, sửa đổi Điều Khoản và Điều Kiện này của VPAWN.
+            </p>
+            <p style="margin: 0; padding: 0">
+                6.&nbsp;&nbsp;Khách hàng không được bán, trao đổi,tặng cho,cho thuê, cho mượn và chỉ được sử dụng Tài Sản Cầm Cố nếu được sự đồng ý của VPAWN.
+            </p>
+            <p style="margin: 0; padding: 0">
+                7.&nbsp;&nbsp;Khách hàng cam kết vô điều kiện và không huỷ ngang chịu trách nhiệm, 
+                bồi thường và đảm bảo VPAWN được loại trừ khỏi tất cả các trách nhiệm, bồi thường, kiện đòi, 
+                thiệt hại, mất mát, hư tổn, chi phí có liên quan tới hoặc phát sinh từ các giao dịch giữa hai bên theo Hợp Đồng này, 
+                bao gồm nhưng không giới hạn tới Khoản Vay, việc cầm cố Tài Sản Cầm Cố.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                G.&nbsp;&nbsp;CAM KẾT CỦA KHÁCH HÀNG
+            </p>
+            <p style="margin: 0; padding: 0">
+                Khách hàng chịu trách nhiệm trước pháp luật  và VPAWN về những lời cam đoan sau đây :
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Khách Hàng sẽ tuân thủ trên mội phương diện tất cả các quy định pháp luật hiện hành liên quan đến việc thực hiện các nghĩa vụ của Khách hàng theo quy định trong Hợp Đồng này và các văn bản liên quan ;
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Bất kỳ thông tin do Khách Hàng cung cấp cho VPAWN theo Hợp Đồng này là đúng và chính xác trên mọi phương diện
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Khách Hàng theo đây chịu trách nhiệm đối với bất kỳ yêu cầu, thông báo, xác nhận nào của Khách Hàng được thực hiện thông thông qua điện thoại và đồng ý rằng các yêu cầu, 
+                thông báo, chỉ thị đó làm phát sinh, xác lập trách nhiệm pháp lý và có hiệu lực ràng buộc đối với Khách hàng theo Hợp Đồng này;
+            </p>
+            <p style="margin: 0; padding: 0">
+                4.&nbsp;&nbsp;Nếu có sự  thay đổi nào về bất kỳ thông tin nào của Khách Hàng tuyên bố trong Hợp Đồng này (bao gồm nhưng không giới hạn thông tin liên quan  
+                Điện Thoại Đăng Ký, Email Đăng Ký, địa chỉ cư trú và bất kỳ thông tin nào khác có khả năng làm ảnh hưởng đến khả năng trả nợ của Khách Hàng), 
+                Khách Hàng theo đây cam kết và có trách nhiệm thông báo cho VPAWN ngay khi có thay đổi.
+            </p>
+            <p style="margin: 0; padding: 0">
+                5.&nbsp;&nbsp;Tài sản thuộc quyền sở hữu hợp pháp của Khách Hàng, hiện không có tranh chấp; không bị cơ quan nhà nước có thẩm quyền xử lý theo quy định pháp luật ; 
+                có nguồn gốc hợp pháp để được cấm cố theo Hợp Đồng này và hiện đang không được thế chấp, cầm cố, bảo lãnh ở bất kỳ nơi nào khác cho bất cứ bên thứ ba nào.
+            </p>
+            <p style="margin: 0; padding: 0">
+                6.&nbsp;&nbsp;Trường hợp không tuân thủ nghĩa vụ thanh toán quy định tại mục 1 Phần B Điều khoản và Điều Kiện Chung thì Khách Hàng sẽ thanh toán cho Vpawn một khoản phạt vi phạm được tính theo công thức sau:
+            </p>
+            <ol style="list-style-type: none; margin: 0; padding: 0">
+                <li style="text-align: center">
+                    Khoản Phạt Vi Phạm = 25.000 VNĐ × A× 5
+                </li>
+                <li>
+                    <i>Trong đó, A = Thời gian quá hạn thanh toán : 5.</i>
+                </li>
+                <li>
+                    <i>Trường hợp A không phải là số nguyên thì sẽ được làm tròn lên số nguyên gần nó nhất (ví dụ 5,1 được làm tròn thành 6)</i>
+                </li>
+            </ol>
+            <p style="margin: 0; padding: 0">
+                7.&nbsp;&nbsp;Việc giao kết Hợp Đồngnày hoàn toàn tự nguyện, không bị lừa dối hoặc ép buộc.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                H.&nbsp;&nbsp;SỰ KIỆN VI PHẠM 
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Mỗi sự kiện hoặc trường hợp trong các sự kiện hoặc trường hợp quy định sau đây là một Sự Kiện Vi Phạm:
+            </p>
+            <ol style="list-style-type: none; margin: 0; padding: 0 0 0 5px">
+                <li>
+                    a.&nbsp;&nbsp;Khách Hàng không tuân thủ bất cứ quy định nào Hợp Đồng này hoặc bất cứ văn bản tài liệu nào khác liên quan, bao gồm cả việc không thanh toán bát cứ số tiền gốc, tiền lãi, khoản phí hoặc số tiền nào khác phải trả theo quy định trong Hợp Đồng hoặc bất kỳ văn bản liên quan khác khi đáo hạn thanh toán.
+                </li>
+                <li>
+                    b.&nbsp;&nbsp;Khách Hàng vi phạm bất kỳ nghĩa vụ với bất kỳ bên thứ ba nào cung cấp dịch vụ liên quan đến việc cấp các khoản vay theo hợp đồng này được xem là vi phạm Hợp Đồng này.
+                </li>
+                <li>
+                    c.&nbsp;&nbsp;Bất cứ khẳng định hoặc tuyên bố nào được đưa ra hoặc coi là được đưa ra bởi Khách Hàng trong Hợp Đồng hoặc bất kỳ văn bản liên quan nào là không đúng hoặc sai lệch trên bất cứ phương diện trọng yếu nào tại thời điểm đưa ra hoặc coi là được đưa ra.
+                </li>
+                <li>
+                    d.&nbsp;&nbsp;Bất cứ sự kiện nào hoặc một loạt các sự kiện xảy ra mà theo quan điểm của VPAWN là có thể có ảnh hưởng bất lợi nghiêm trọng đến tình hình tài chính của Khách Hàng.
+                </li>
+                <li>
+                    e.&nbsp;&nbsp;Bất cứ khoản nợ nào liên quan đến các khoản tiền được Khách Hàng vay của VPAWN không được thanh toán khi đến hạn.
+                </li>
+                <li>
+                    f.&nbsp;&nbsp;Có bất cứ sự thay đổi nào về pháp luật Việt Nam ảnh hưởng đến việc xem xét tiếp tục cho vay của VPAWN. 
+                </li>
+            </ol>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Khi và tại bất cứ thời điểm nào sau khi xảy ra và tiếp diễn một sự kiện vi phạm, VPAWN có quyền:
+            </p>
+            <ol style="list-style-type: none; margin: 0; padding: 0 0 0 5px">
+                <li>
+                    a.&nbsp;&nbsp;Tuyên bố đến hạn thanh toán ngay toàn bộ hoặc bất cứ phần tồn đọng nào của khoản vay cùng với tiền lãi phát sinh và tất cả các số tiền khác đã phát sinh hoặc chưa được thanh toán theo quy định của Hợp Đồng;
+                </li>
+                <li>
+                    b.&nbsp;&nbsp;Thu hồi Tài Sản cầm cố và toàn quyền xử lý Tài sản cầm cố mà không cần chấp nhận của Khách Hàng.
+                </li>
+                <li>
+                    c.&nbsp;&nbsp;Số tiền thu được từ việc xử lý tài sản cầm cố sẽ được sử dụng để thanh toán toàn bộ dư nợ vay của Khách Hàng tại VPAWN theo thứ tự như quy định tại Điều 11 Phần B của Thoả Thuận Chung này.
+                </li>
+                <li>
+                    d.&nbsp;&nbsp;Chấm dứt tất cả các nghĩa vụ của VPAWN theo Hợp Đồng và các văn bản liên quan.
+                </li>
+                <li>
+                    e.&nbsp;&nbsp;Thực hiện tất cả các quyền và chế tài của VPAWN theo quy định tại Hợp Đồng và các văn bản liên quan.
+                </li>
+            </ol>
+            <p style="margin: 0; padding: 0; font-weight: 600">
+                I.&nbsp;&nbsp;BỒI THƯỜNG THIỆT HẠI
+            </p>
+            <p style="margin: 0; padding: 0">
+                Khách hàng sẽ bồi hoàn cho VPAWN về bất cứ chi phí, tổn thất hoặc trách nhiệm nào phát sinh đối với VPAWN do:
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Xảy ra bất cứ Sự Kiện Vi Phạm nào;
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Thông tin do Khách Hàng cung cấp hoặc xác nhận là hoặc bị cáo buộc là thông tin sai lệch và/hoặc lừa dối trên bất cứ phương diện nào ;
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Bất cứ cuộc điều tra, kiện tụng (hoặc quyết định hoặc thủ tục tố tụng liên quan đến Khách Hàng) hoặc liên quan đến các giao dịch dự kiến hoặc được tài trợ theo Hợp Đồng và các văn bản liên quan;
+            </p>
+            <p style="margin: 0; padding: 0">
+                4.&nbsp;&nbsp;Nợ Đến Hạn theo Hợp Đồng (hoặc bất kỳ số tiền phải thanh toán nào được quy định tại Hợp Đồng) không được trả nợ trước hạn theo thông báo trả nợ trước hạn của Khách Hàng.
+            </p>
+            <p style="margin: 0; padding: 0; font-weight: 600; margin-top: 30px">
+                J.&nbsp;&nbsp;QUY ĐỊNH CHUNG
+            </p>
+            <p style="margin: 0; padding: 0">
+                1.&nbsp;&nbsp;Khách Hàng bằng văn bản này đồng ý và cho phép VPAWN chuyển giao và tiết lộ cho bất kỳ bên thứ ba bất cứ thông tin nào liên quan tới Khách Hàng và/hoặc vấn đề liên quan đến Hợp Đồng này và/hoặc tài liệu bảo đảm tại bất cứ thời điểm nào mà VPAWN theo quyết định của mình cho đúng đắn và cần thiết mà không phải chịu trách nhiệm với Khách Hàng. 
+                Khách Hàng theo đây đồng ý rằng những thông tin nói trên có thể được sử dụng, mã hoá,truyền tai và lưu trữ bởi VPAWN và công ty quản lý, các chi nhánh, 
+                công ty con và các công ty thành viên khác của VPAWN (bất kể trong hay ngoài lãnh thổ Việt Nam) và/hoặc được trao đổi cho hoặc với tất cả các bên mà VPAWN thấy cần thiết trong phạm vi pháp luật cho phép. 
+                Tất cả những hành động trên sẽ không có bất kỳ trách nhiệm nào đối với Khách Hàng.
+                Khách Hàng hoàn toàn chấp thuận đối với những hành động đó và tuyên bố rằng không cần thiết hay bắt buộc một sự chấp thuận nào khác của Khách Hàng thêm nữa;
+            </p>
+            <p style="margin: 0; padding: 0">
+                2.&nbsp;&nbsp;Chi tiết các phí theo Hợp Đồng này được quy định trong biểu phí chung do VPAWN ban hành theo từng thời kỳ và/hoặc được quy định trong Thông Báo Đến Khách Hàng (Biểu Phí). 
+                Biểu Phí là một phần không thể tách rời của Điều Khoản và Điều Kiện Chung này.
+                VPAWN có quyền thay đổi Biểu Phí hoặc bổ sung bất kỳ phí nào theo quy định pháp luật hiện hành mà không cần thông báo trước cho khách hàng.
+            </p>
+            <p style="margin: 0; padding: 0">
+                3.&nbsp;&nbsp;Tuỳ thuộc vào lựa chọn của Khách Hàng, Khách Hàng có thể đăng ký với VPAWN/Đối tác do VPAWN chỉ định về phương thức đăng ký giao dịch để nhận/gửi văn bản liên quan đến việc ký kết Hợp Đồng này và vay vốn VPAWN bao gồm nhưng không không giới hạn như hình thức như điện thoại, tin nhắn, email…(Phương Thức Đăng Ký Giao Dịch) phù hợp với các thông tin khách hàng đã cung cấp tại phần thông tin các bên của Hợp Đồng này. 
+                Theo đó, bất kỳ Thông Báo Đến Khách Hàng hoặc bất kỳ thông báo nào do VPAWN và/hoặc bên thứ ba do VPAWN chỉ định gửi tới Khách Hàng liên quan đến Hợp Đồng này bằng Phương Thức Đăng Ký Giao Dịchsẽ được coi là đã gửi cho Khách Hàng từ thời điểm khi cuộc điện thoại/tin nhắn/ thư điện tử (email) của VPAWN và/ hoặc Đối tác của VPAWN được tiếp nhận bởi/ gửi cho khách hàng mà khách hàng không có khiếu nại, khiếu kiện gì về sau;
+            </p>
+            <p style="margin: 0; padding: 0">
+                4.&nbsp;&nbsp;Nếu bất kỳ điều khoản nào cửa Hợp Đồng này(hoặc bất kỳ phần nào của nó) trở thành bất hợp lệ,bất hợp pháp hoặc không thể thi hành,thì tính hợp lệ, 
+                hợp pháp hoặc tính bắt buộc của những nội dung còn lại của Hợp Đồng này sẽ không vì thế mà bị ảnh hưởng hay mất hiệu lực.
+            </p>
+            <p style="margin: 0; padding: 0">
+                5.&nbsp;&nbsp;Hợp Đồng được điều chỉnh theo quy định pháp luật Việt Nam. Trường hợp có tranh chấp pháp sinh sẽ được các Bên giải quyết tại Toà Án có thẩm quyền tại Việt Nam.
+            </p>
+            <p style="margin: 0; padding: 0">
+                6.&nbsp;&nbsp;Hợp Đồng này có hiệu lực từ thời điểm các bên ký kết hợp lệ và kéo dài hiệu lực cho đến khi khách hàng hoàn thành tất cả các nghĩa vụ nợ đối với VPAWN theo Hợp Đồng này. 
+                Bất kể các quy định này, VPAWN có toàn quyền thay đổi, bổ sung và/hoặc đơn phương chấm dứt Hợp Đồng vào bất kỳ thời điểm nào bằng việc thông báo trước cho khách hàng một thời gian hợp lý. 
+                Khi Hợp Đồng được chấm dứt theo Điều này và khách hàng đã hoàn tất nghĩa vụ thanh toán theo quy định tại Hợp Đồng này thì,
+                (i) Hợp Đồng Cầm Cố sẽ tự động thanh lý và Tài Sản sẽ tự động được giải toả khỏi nghĩa vụ bảo đảm theo Hợp Đồng này mà không phải ký thêm bất kỳ tài liệu nào khác; 
+                (ii) Tài Sản được xem là đã hoàn trả lại cho Khách Hàng vào thời điểm khoản vay đã tất toán tại VPAWN; và 
+                (iii) Khách Hàng cam kết và xác nhận không có bất kỳ khiếu nại, tranh chấp nào.
+            </p>
+        </fieldset>
+    </div>
+</body>
+</html>

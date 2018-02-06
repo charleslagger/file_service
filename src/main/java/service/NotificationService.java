@@ -7,9 +7,8 @@ import static config.Headers.epAuth;
 import static config.Headers.epMac;
 import static config.Headers.epNAME;
 import static config.Headers.userName;
-
+import java.util.LinkedList;
 import java.util.List;
-
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -25,13 +24,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.vega.core.CoreResponse;
 
 import db.entities.FileCore;
 import db.entities.FileCore.AckUpload;
+import db.entities.FileCore.LoanDocument;
 import util.JsonMapper;
 
 @Service
@@ -51,8 +50,6 @@ public class NotificationService {
 	}
 
 	private void addHeader(HttpHeaders headers) {
-		System.out.println("==>> epName" + epNAME);
-
 		headers.add("EP_NAME", epNAME);
 		headers.add("EP_MAC", epMac);
 		headers.add("EP_AUTH", epAuth);
@@ -62,7 +59,7 @@ public class NotificationService {
 		headers.add("User_Name", userName);
 	}
 
-	public void sendLoanDocuments(FileCore.LoanDocuments loanDocuments) {
+	public CoreResponse sendListLoanDocuments(FileCore.LoanDocuments loanDocuments) {
 		String urlAckResponse = HOST + CONTEXT_PATH + loanDocuments.getAckUrl();
 		log.info("===>>>UrlAckResponse: " + urlAckResponse);
 		log.info("===>>>LoanDocuments: " + JsonMapper.writeValueAsString(loanDocuments));
@@ -81,12 +78,14 @@ public class NotificationService {
 		ResponseEntity<CoreResponse> response = restTemplate.exchange(urlAckResponse, HttpMethod.POST,
 				new HttpEntity<List<FileCore.LoanDocument>>(loanDocuments.getLoanDocuments(), headers),
 				parameterizedTypeReference);
-		log.info("Response body: " + response.getBody().getMessageCode());
 
+		log.info("Response body: " + response.getBody().getMessageCode());
 		log.info("==>>Response Body: " + response.getBody());
+		
+		return response.getBody();
 	}
 
-	public void sendAcknowledgeUploadContract(AckUpload ackUpload) {
+	public CoreResponse sendAcknowledgeUploadContract(AckUpload ackUpload) {
 
 		String urlAckResponse = HOST + CONTEXT_PATH + ackUpload.getAckUrl();
 		log.info("===>>>UrlAckResponse: " + urlAckResponse);
@@ -107,9 +106,11 @@ public class NotificationService {
 		log.info("Response body: " + response.getBody().getMessageCode());
 
 		log.info("==>>Response Body: " + response.getBody());
+		
+		return response.getBody();
 	}
 
-	public void sendDisbursement(String ackUrl, Object... objects) {
+	public CoreResponse sendDisbursement(String ackUrl, Object... objects) {
 		String urlAckResponse = HOST + CONTEXT_PATH + ackUrl;
 
 		log.info("\n[GET] call url: " + urlAckResponse);
@@ -133,10 +134,59 @@ public class NotificationService {
 				new HttpEntity<Object>(headers), parameterizedTypeReference);
 
 		log.info("Response body: " + response.getBody().getMessageCode());
+		
+		return response.getBody();
 	}
 
-	public void generateFileToCore(MultipartFile multipartFile) {
+	public CoreResponse sendLoanDocument(String ackUrl, FileCore.LoanDocument loanDocument) {
+		List<LoanDocument> loanDocuments = new LinkedList<>();
+		loanDocuments.add(loanDocument);
 		
+		log.info("==>>LoanDocument: " + JsonMapper.writeValueAsString(loanDocument));
+		String urlAckResponse = HOST + CONTEXT_PATH + ackUrl;
+		log.info("=========>>>Url send noti: " + urlAckResponse);
+
+		HttpHeaders headers = new HttpHeaders();
+
+		addHeader(headers);
+		// set up
+		PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+
+		HttpClientBuilder clientBuilder = HttpClients.custom().setConnectionManager(connectionManager)
+				.setRetryHandler(new DefaultHttpRequestRetryHandler(5, true));
+
+		HttpClient httpClient = clientBuilder.build();// Return a new httpClient
+		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+		// post
+		ResponseEntity<CoreResponse> response = restTemplate.exchange(urlAckResponse, HttpMethod.POST,
+				new HttpEntity<List<LoanDocument>>(loanDocuments, headers),
+				parameterizedTypeReference);
+
+		log.info("==>>Response Body: " + response.getBody());
 		
+		return response.getBody();
+	}
+
+	public CoreResponse sendContract(String ackUrl, AckUpload.AcknowledgeUploaded acknowledgeUploaded) {
+		String urlAckResponse = HOST + CONTEXT_PATH + ackUrl;
+		log.info("===>>>UrlAckResponse: " + urlAckResponse);
+		log.info("===>>>AckUploaded: " + JsonMapper.writeValueAsString(acknowledgeUploaded));
+
+		// set up
+		PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+
+		HttpClientBuilder clientBuilder = HttpClients.custom().setConnectionManager(connectionManager)
+				.setRetryHandler(new DefaultHttpRequestRetryHandler(5, true));
+
+		HttpClient httpClient = clientBuilder.build();// Return a new httpClient
+		RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory(httpClient));
+		// post
+		ResponseEntity<CoreResponse> response = restTemplate.exchange(urlAckResponse, HttpMethod.POST,
+				new HttpEntity<AckUpload.AcknowledgeUploaded>(acknowledgeUploaded, headers),
+				parameterizedTypeReference);
+
+		log.info("==>>Response Body: " + response.getBody());
+		
+		return response.getBody();
 	}
 }

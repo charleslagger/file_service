@@ -15,8 +15,6 @@ public class FileSystem implements Serializable{
 
 	private FileSystemResource multipartFile;
 	
-	
-
 	public FileSystem() {
 	
 	}
@@ -88,7 +86,4 @@ public class FileSystem implements Serializable{
 	public void setMultipartFile(FileSystemResource multipartFile) {
 		this.multipartFile = multipartFile;
 	}
-	
-	
-
 }

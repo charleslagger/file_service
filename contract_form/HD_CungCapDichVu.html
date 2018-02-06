@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+        html * {
+            font-family: 'Times New Roman' !important;
+            font-size: 12px !important;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="text-align: center">
+            <h2>HỢP ĐỒNG CUNG CẤP DỊCH VỤ</h2>
+            <span>Số: [[customer.id]]/HDDV/VEGAGAME-[[ContractCode]]&nbsp;-&nbsp;Ngày: [[startTime]]</span>
+        </div>
+
+        <fieldset style="padding: 10px 0 0; line-height: 18px; margin-top: 5px; margin-bottom: 0; padding-bottom: 0">
+            <ul style="padding: 0; margin: 0; list-style-type: none">
+                <li>
+                    Bên cung cấp Dịch Vụ: <strong>CÔNG TY CỔ PHẦN TRÒ CHƠI VEGA</strong>
+                </li>
+                <li>
+                    Địa chỉ: Phòng 809, tầng 8, tòa nhà VET, số 98, đường Hoàng Quốc Việt, phường Nghĩa Đô, quận Cầu Giấy, thành phố Hà Nội
+                </li>
+                <li>
+                    Số điện thoại: 024 3791 8440
+                </li>
+                <li>
+                    Đại Diện: ông Lê Hữu Song&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Chức vụ: Giám đốc
+                </li>
+                <li>
+                    (Sau đây gọi là “<strong>VEGA</strong>”)
+                </li>
+                <li>
+                    Và
+                </li>
+                <li>
+                    Ông/Bà: <strong>[[customer.fullname]]</strong>
+                </li>
+                <li>
+                    <span style="width: 18.66666667%; float: left;">
+                        Ngày sinh: <strong>[[customer.dob]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>
+                    </span>
+                    <span style="width: 81.33333333%; float: left;">
+                        CMTND số: <strong>[[customer.socialid]]</strong>
+                    </span>
+                </li>
+                <li>
+                    Địa chỉ HKTT: <strong>[[customer.customerHistory.homeaddress]]</strong>
+                </li>
+                <li>
+                    Chỗ ở hiện tại: <strong>[[customer.customerHistory.tempaddress]]</strong>
+                </li>
+                <li style="margin: 0; padding: 0">
+                    <span style="width: 18.66666667%; float: left;">
+                        SĐT: <strong>[[customer.phoneNo]]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+                    </span>
+                    <span style="width: 81.33333333%; float: left;">
+                        Email: <strong>[[customer.customerCare.toEmail]]</strong>
+                    </span>
+                </li>
+                <li>
+                    (Sau đây gọi là “<strong>Khách hàng</strong>”)
+                </li>
+            </ul>
+        </fieldset>
+        <p style="margin: 5px 0; padding: 0; border: 1px solid #919191"></p>
+
+        <fieldset style="padding: 0; text-align: justify; line-height: 18px; margin-top: 0">
+            <p style="margin: 0; padding: 0">
+                Xét rằng, Khách hàng có nhu cầu sử dụng dịch vụ tư vấn từ Vega để ký kết và thực hiện Hợp đồng với Công ty Cổ phần VPAWN (VPAWN) sau đây:
+            </p>
+            <table style="margin: 5px 0 5px; width: 100%; max-width: 100%; border: 1px solid #2d2d2d; border-spacing: 0">
+                <tbody>
+                    <tr>
+                        <td style="border-right: 1px solid #2d2d2d; padding: 3px 7px; vertical-align: middle">Số Hợp đồng vay</td>
+                        <td style="padding: 5px 10px; vertical-align: middle">[[contractCode]]</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: 1px solid #2d2d2d;padding: 3px 7px;vertical-align: middle;border-top: 1px solid #2d2d2d;">Số tiền vay</td>
+                        <td style="border-top: 1px solid #2d2d2d; padding: 3px 7px; vertical-align: middle">[[contractValue]]</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: 1px solid #2d2d2d;padding: 3px 7px;vertical-align: middle;border-top: 1px solid #2d2d2d">Ngày giải ngân</td>
+                        <td style="border-top: 1px solid #2d2d2d; padding: 3px 7px; vertical-align: middle">[[startTime]]</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: 1px solid #2d2d2d;padding: 3px 7px;vertical-align: middle;border-top: 1px solid #2d2d2d">Thời hạn vay</td>
+                        <td style="border-top: 1px solid #2d2d2d; padding: 3px 7px; vertical-align: middle">[[duration]] tháng</td>
+                    </tr>
+                    <tr>
+                        <td style="border-right: 1px solid #2d2d2d;padding: 3px 7px;vertical-align: middle;border-top: 1px solid #2d2d2d">Phí tư vấn/ tháng</td>
+                        <td style="border-top: 1px solid #2d2d2d; padding: 3px 7px; vertical-align: middle">[[PhiDichVu]] VND/tháng</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin: 0; padding: 0">
+                Do đó, Khách hàng và Vega đồng ý tham gia Hợp đồng Cung cấp Dịch vụ này (“Hợp Đồng”) với các điều khoản như sau:
+            </p>
+            <h4 style="margin: 0; padding: 5px 0">I. PHẠM VI DỊCH VỤ</h4>
+            <p style="margin: 0; padding: 0">
+                Khách hàng chỉ định Vega cung cấp dịch vụ tư vấn liên quan đến các Khoản Vay của Khách hàng tại Công ty Cổ Phần Vpawn (“<strong>VPAWN</strong>”) (“<strong>Hợp Đồng Vay Cầm Cố</strong>”) với các gói dịch vụ và nội dung công việc như sau:
+            </p>
+            <ol style="list-style-type: none; margin: 0; padding: 0">
+                <li>
+                    <strong>1. Các gói dịch vụ:</strong>
+                    <ul style="list-style-type: none; margin: 0; padding: 0">
+                        <li>&nbsp;&nbsp;&nbsp;i. Tư vấn vay ban đầu;</li>
+                        <li>&nbsp;&nbsp;&nbsp;ii. Tư vấn gia hạn thời hạn vay;</li>
+                        <li>&nbsp;&nbsp;&nbsp;iii. Tư vấn vay bổ sung</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>2. Công việc thực hiện:</strong>
+                    <ul style="list-style-type: none; margin: 0; padding: 0">
+                        <li>&nbsp;&nbsp;&nbsp;i. tư vấn đặc tính sản phẩm vay, số tiền vay được yêu cầu và thời hạn vay;</li>
+                        <li>&nbsp;&nbsp;&nbsp;ii. tư vấn điều kiện vay đối với Khách Hàng, các hồ sơ giấy tờ, quy định cần thiết cho Khoản Vay;</li>
+                        <li>&nbsp;&nbsp;&nbsp;iii. hỗ trợ khách hàng trong việc chuẩn bị các tài liệu cần thiết, Đơn đề nghị Vay vốn;</li>
+                        <li>&nbsp;&nbsp;&nbsp;iv. sắp xếp việc ký kết Hợp Đồng Vay Cầm Cố; (v) hỗ trợ các thông tin liên lạc.</li>
+                    </ul>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset style="padding: 0; text-align: justify; line-height: 18px; margin-top: 0">
+            <h4 style="margin: 0; padding: 0 0 5px 0">II. PHÍ TƯ VẤN VÀ PHƯƠNG THỨC THANH TOÁN</h4>
+            <p style="margin: 0; padding: 0">
+                <strong>1. Phí Tư Vấn:</strong> Là khoản phí mà Khách Hàng phải thanh toán cho Vega cho mỗi gói dịch vụ do Vega cung cấp cho Khách hàng. <strong>Lưu ý:</strong> Giá trị khoản vay được tính theo giá trị được giải ngân/gia hạn chưa bao gồm các loại lãi và phí.
+            </p>
+            <p style="margin: 0; padding: 0">
+                <strong>2. Thời hạn thanh toán phí tư vấn:</strong> Phí Tư Vấn theo Hợp Đồng này được Khách Hàng thanh toán theo hình thức trả góp vào ngày đến hạn của kỳ thanh toán tương ứng được quy định tại Hợp Đồng Vay Cầm Cố.
+                Khoản trả góp theo quy định tại Điều này được tính bằng Phí Tư Vấn chia cho Thời Hạn Khoản Vay (tháng) quy định tại Hợp Đồng Vay Cầm Cố.
+                Phí Tư Vấn sẽ không được hoàn trả hay giảm trừ vì bất cứ lý do nào trong bất kỳ trường hợp nào kể cả khi Khoản Vay được thanh toán trước hạn.
+                Trường hợp Khách Hàng tất toán Khoản Vay trước hạn, Khách Hàng có trách nhiệm thanh toán đủ Phí Tư Vấn tại thời điểm tất toán Khoản Vay.
+            </p>
+            <p style="margin: 0; padding: 0">
+                <strong>3. Hình thức thanh toán phí tư vấn: </strong>
+                Khách hàng thanh toán toàn bộ các khoản phí cho Vega thông quaVPAWN.
+                Các bên đồng ý rằng Phí Tư Vấn sẽ được ưu tiên thanh toán đầu tiên từ khoản thanh toán của Khách Hàng trước cả nghĩa vụ thanh toán của Khách Hàng đối với VPAWN.
+                Khách Hàng đồng ý tuân thủ với các hướng dẫn của VPAWN để thực hiện việc thanh toán.
+            </p>
+            <h4 style="margin: 0; padding: 5px 0">III. QUYỀN VÀ TRÁCH NHIỆM CỦA CÁC BÊN</h4>
+            <p style="margin: 0; padding: 0; font-weight: bold">
+                1. Quyền và Trách nhiệm của Vega
+            </p>
+            <ul style="list-style-type: none; margin: 0; padding: 0">
+                <li>
+                    &nbsp;&nbsp;i. Vega thực hiện nghĩa vụ của mình theo Hợp Đồng này với kinh nghiệm, kỹ năng và sự thận trọng.
+                </li>
+                <li>
+                    &nbsp;&nbsp;ii. Vega được sử dụng và cung cấp cho VPAWN hoặc bất cứ bên thứ ba nào toàn bộ các thông tin do Khách hàng cung cấp để thực hiện công việc tư vấn theo Hợp đồng.
+                </li>
+            </ul>
+            <p style="margin: 0; padding: 0; font-weight: bold">
+                2.	Quyền và Trách nhiệm của Khách hàng
+            </p>
+            <ul style="list-style-type: none; margin: 0; padding: 0">
+                <li>
+                    &nbsp;&nbsp;i. Thanh toán đầy đủ Phí tư vấn đúng hạn như quy định tại Hợp đồng này.
+                </li>
+                <li>
+                    &nbsp;&nbsp;ii.	Đảm bảo tất cả các thông tin Khách Hàng cung cấp cho Vega là đúng sự thật và thuộc quyền sở hữu, quản lý, sử dụng hợp pháp của Khách hàng;Khách hàng chịu trách nhiệm hoàn toàn trước pháp luật, Vega và bất cứ bên thứ ba nào có liên quan về việc cung cấp và sử dụng các thông tin do mình cung cấp
+                </li>
+                <li>
+                    &nbsp;&nbsp;iii. Cho phép Vega sử dụng và/hoặc chuyển giao và tiết lộ cho VPAWN hoặc bất kỳ bên thứ ba bất cứ thông tin, tài liệu nào liên quan tới Khách Hàng và/hoặc vấn đề liên quan đến Hợp đồng nàytheo quyết định của mình cho là đúng đắn và cần thiết mà không phải chịu trách nhiệm với Khách Hàng.
+                </li>
+                <li>
+                    &nbsp;&nbsp;iv. Nếu Khách hàng chậm thanh toán bất cứ khoản phí nào, Khách hàng phải Thanh toán cho Vega khoản bồi thường là 25.000VNĐ cho mỗi ngày chậm thanh toán.
+                </li>
+            </ul>
+
+            <h4 style="margin: 0; padding: 5px 0">IV. CÁC VẤN ĐỀ CHUNG</h4>
+            <p style="margin: 0; padding: 0">
+                <strong>1. Thông báo: </strong>Các thông báo của Vega sẽ được gửi tới cho Khách hàng qua thông tin do Khách hàng cung cấp tại phần đầu của Hợp đồng này.
+            </p>
+            <p style="margin: 0; padding: 0">
+                <strong>2. Luật điều chỉnh: </strong>Hợp đồng này chịu sự điều chỉnh theo pháp luật Việt Nam. Các bên thừa nhận thẩm quyền xét xử của Toà án Việt Nam.
+            </p>
+
+            <h4 style="margin: 0; padding: 5px 0">V. THỜI HẠN HỢP ĐỒNG</h4>
+            <p style="margin: 0; padding: 0">
+                1. Hợp Đồng sẽ bắt đầu có hiệu lực kể từ thời điểm các bên ký kết hợp lệ và sẽ duy trì hiệu lực cho đến khi Khách hàng hoàn thành việc thanh toán khoản phí cuối cùng.
+            </p>
+        </fieldset>
+        <fieldset style="border: none; text-align: justify; margin: 0; padding: 0">
+            <table style="width: 100%; margin: 0; padding: 0; line-height: 25px">
+                <tr style="margin: 0; padding: 0; width: 100%">
+                    <td valign="top" style="width: 45%">
+                        <p style="text-align: center; margin: 0; padding: 0">CÔNG TY CỔ PHẦN TRÒ CHƠI VEGA</p>
+                    </td>
+                    <td valign="top" style="width: 45%; text-align: center">
+                        <p style="margin: 0; padding: 0; line-height: 23px">KHÁCH HÀNG</p>
+                        <i style=line-height: 18px">(Ký và ghi rõ họ tên)</i>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</body>
+</html>

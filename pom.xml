@@ -119,22 +119,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.11.v20150529</version>
-                <configuration>
-                    <webApp>
-                        <contextPath>/FileService</contextPath>
-                        <webInfIncludeJarPattern>.*/foo-[^/]*\.jar$|.*/classes/.*</webInfIncludeJarPattern>
-                    </webApp>
-                    <scanIntervalSeconds>900</scanIntervalSeconds>
-                    <httpConnector>
-                        <port>8080</port>
-                    </httpConnector>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>

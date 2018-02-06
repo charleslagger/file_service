@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.vega.core.CoreException;
 import com.vega.core.CoreResponse;
-
 import db.entities.FileCore;
 import db.entities.UrlParam;
 import db.entities.UrlParam.UrlParams;
@@ -51,6 +49,7 @@ public class UploadController {
         }
     }
 
+    //TODO: upload multiple File
     @PostMapping("/private/file/upload")
     public CoreResponse saveFile(@RequestBody UrlParams responseCore){
         try {
@@ -74,8 +73,8 @@ public class UploadController {
     public CoreResponse saveFile(@ModelAttribute UrlParam urlParam){
         try {
             log.info("Upload file and param: " + JsonMapper.writeValueAsString(urlParam));
-            
-            return new CoreResponse(true, fileService.saveFile(urlParam));
+
+            return fileService.saveFile(urlParam);
         } catch (CoreException e) {
 
             log.info(" core exc controller");

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /*
+* Go to ROBO 3T get query below to insert id and seq to "file_seq" collection(table): 
 * db.file_seq.insert({_id: "Files",seq: 0})
 * */
 
